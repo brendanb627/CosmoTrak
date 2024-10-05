@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
-import { Box, CssBaseline, Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
-import MuiAppBar from '@mui/material/AppBar';
+import { Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import InfoIcon from '@mui/icons-material/Info';
 import HelpIcon from '@mui/icons-material/Help';
-import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import StormIcon from '@mui/icons-material/Storm';
 import PublicIcon from '@mui/icons-material/Public';
@@ -19,8 +14,6 @@ import QuizIcon from '@mui/icons-material/Quiz';
 import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
 
 export const PageLayout = ({selectedPage}) => {
-  const location = useLocation()
-  const [able, setAble] = useState(false);
   const navigate = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = useState(false);

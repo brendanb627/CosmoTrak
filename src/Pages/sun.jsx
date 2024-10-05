@@ -1,6 +1,5 @@
 import React from "react";
 import { PlanetDefault } from "../Components/planet-default";
-import { PageLayout } from "../Components/sidebar";
 
 const sun = {
   name: "Object: Sun",

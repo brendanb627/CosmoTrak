@@ -1,7 +1,5 @@
 import React from "react";
 import { PlanetDefault } from "../Components/planet-default";
-import { PageLayout } from "../Components/sidebar";
-import { useThree } from "react-three-fiber";
 
 export const PlanetEarth = () => {
   const Earth = {

@@ -1,10 +1,10 @@
 import React from "react";
 import { PlanetDefault } from "../Components/planet-default";
 
-const jupiter = {
+const Jupiter = {
   name: "Jupiter",
   description: "Mercury is the smallest planet in our solar system.",
-  planetTexture: "jupiter_2k.webp",
+  planetTexture: "jupiterTexture.webp",
   radiantIntensity:"0.001",
   radiant: "0x0000ff",
   geoDef: `Geology:
@@ -21,7 +21,7 @@ export const PlanetJupiter = () => {
   return (
     <>
       <PlanetDefault
-        planet={jupiter}
+        planet={Jupiter}
       />
     </>
   );
