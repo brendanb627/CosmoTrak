@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import * as THREE from "three";
 import { PlanetLabel } from "../Sub-Components/planet-label";
 import {
   MercuryOrbit,
@@ -16,8 +15,7 @@ import {
 import { PageLayout } from "../Components/sidebar";
 import Slider from "@mui/material/Slider";
 import { randFloat } from "three/src/math/MathUtils.js";
-import Background from "../Components/background";
-import { mercuryVelocity, mercuryPosition } from "../Components/move-planets";
+import { mercuryVelocity } from "../Components/move-planets";
 import { LoadingPage } from "../Components/loading-page";
 
 const CameraController = ({ children }) => {
@@ -150,13 +148,13 @@ const SolarSytem = ({
 
   const fetchMarsCoordinates = () =>
     fetchPlanetsCoordinates(499, setMarsCoordinates);
-  //now the other planets
+
   const fetchJupiterCoordinates = () =>
     fetchPlanetsCoordinates(599, setJupiterCoordinates);
 
   const fetchSaturnCoordinates = () =>
     fetchPlanetsCoordinates(699, setSaturnCoordinates);
-  //then  the rest
+  
   const fetchUranusCoordinates = async () =>
     await fetchPlanetsCoordinates(799, setUranusCoordinates);
 
@@ -191,9 +189,6 @@ const SolarSytem = ({
     setIsLoading(false);
   }
 
-
-  const [lastUpdate, setLastUpdate] = useState(Date.now());
-
   // useFrame(() => {
   //   const now = Date.now();
   //   if (now - lastUpdate > 1000) {
@@ -220,9 +215,6 @@ const SolarSytem = ({
   return (
     <>
       <mesh position={[0, 0, 0]}>
-        {/* <Html pointerEvents="none">
-          <button onClick={handleNextMonth}>Next Month</button>
-        </Html> */}
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="yellow" />
       </mesh>
@@ -261,7 +253,7 @@ const SolarSytem = ({
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="skyblue" />
       </mesh>
-      {isLoading == false &&
+      {isLoading === false &&
         Math.abs(camera.position.x) < 540 &&
         Math.abs(camera.position.y) < 540 &&
         Math.abs(camera.position.z) < 540 && (
@@ -286,7 +278,7 @@ const SolarSytem = ({
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="skyblue" />
       </mesh>
-      {isLoading == false &&
+      {isLoading === false &&
         Math.abs(camera.position.x) < 600 &&
         Math.abs(camera.position.y) < 600 &&
         Math.abs(camera.position.z) < 600 && (
@@ -311,7 +303,7 @@ const SolarSytem = ({
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="skyblue" />
       </mesh>
-      {isLoading == false &&
+      {isLoading === false &&
         Math.abs(camera.position.x) < 570 &&
         Math.abs(camera.position.y) < 570 &&
         Math.abs(camera.position.z) < 570 && (
@@ -335,7 +327,7 @@ const SolarSytem = ({
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="skyblue" />
       </mesh>
-      {isLoading == false &&
+      {isLoading === false &&
         Math.abs(camera.position.x) < 600 &&
         Math.abs(camera.position.y) < 600 &&
         Math.abs(camera.position.z) < 600 && (
@@ -359,7 +351,7 @@ const SolarSytem = ({
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="skyblue" />
       </mesh>
-      {isLoading == false &&
+      {isLoading === false &&
         Math.abs(camera.position.x) < 4500 &&
         Math.abs(camera.position.y) < 4500 &&
         Math.abs(camera.position.z) < 4500 && (
@@ -383,7 +375,7 @@ const SolarSytem = ({
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="skyblue" />
       </mesh>
-      {isLoading == false && (
+      {isLoading === false && (
         <PlanetLabel
           position={JupiterCoordinates}
           scale={scale}
@@ -405,7 +397,7 @@ const SolarSytem = ({
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="skyblue" />
       </mesh>
-      {isLoading == false && (
+      {isLoading === false && (
         <PlanetLabel
           position={UranusCoordinates}
           scale={scale}
@@ -443,11 +435,11 @@ const SolarSytem = ({
 export function Orrery() {
   const [zoom, setZoom] = useState(1);
   const [value, setValue] = useState(400);
-  const [sliderDirection, setSliderDirection] = useState(1); // new state variable
+  const [sliderDirection, setSliderDirection] = useState(1); 
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const canvas = document.getElementById("root"); // Get the canvas element
+    const canvas = document.getElementById("root");
     canvas.addEventListener("wheel", (event) => {
       event.preventDefault();
       const zoomChange = event.deltaY > 0 ? 1.1 : 0.9;
@@ -469,7 +461,6 @@ export function Orrery() {
       <PageLayout />
       <div className="canvasScreen">
         <Canvas id="canvas" width={800} height={600} domEvents={false}>
-          {/* <Background texturePath='stars_8k.jpg'/> */}
           <CameraController zoom={zoom} zoomChange={zoom}>
             <ambientLight />
             <SolarSytem
