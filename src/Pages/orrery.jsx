@@ -148,13 +148,13 @@ const SolarSytem = ({
 
   const fetchMarsCoordinates = () =>
     fetchPlanetsCoordinates(499, setMarsCoordinates);
-  //now the other planets
+
   const fetchJupiterCoordinates = () =>
     fetchPlanetsCoordinates(599, setJupiterCoordinates);
 
   const fetchSaturnCoordinates = () =>
     fetchPlanetsCoordinates(699, setSaturnCoordinates);
-  //then  the rest
+  
   const fetchUranusCoordinates = async () =>
     await fetchPlanetsCoordinates(799, setUranusCoordinates);
 
@@ -189,9 +189,6 @@ const SolarSytem = ({
     setIsLoading(false);
   }
 
-
-  const [lastUpdate, setLastUpdate] = useState(Date.now());
-
   // useFrame(() => {
   //   const now = Date.now();
   //   if (now - lastUpdate > 1000) {
@@ -218,9 +215,6 @@ const SolarSytem = ({
   return (
     <>
       <mesh position={[0, 0, 0]}>
-        {/* <Html pointerEvents="none">
-          <button onClick={handleNextMonth}>Next Month</button>
-        </Html> */}
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="yellow" />
       </mesh>
@@ -441,11 +435,11 @@ const SolarSytem = ({
 export function Orrery() {
   const [zoom, setZoom] = useState(1);
   const [value, setValue] = useState(400);
-  const [sliderDirection, setSliderDirection] = useState(1); // new state variable
+  const [sliderDirection, setSliderDirection] = useState(1); 
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const canvas = document.getElementById("root"); // Get the canvas element
+    const canvas = document.getElementById("root");
     canvas.addEventListener("wheel", (event) => {
       event.preventDefault();
       const zoomChange = event.deltaY > 0 ? 1.1 : 0.9;
@@ -467,7 +461,6 @@ export function Orrery() {
       <PageLayout />
       <div className="canvasScreen">
         <Canvas id="canvas" width={800} height={600} domEvents={false}>
-          {/* <Background texturePath='stars_8k.jpg'/> */}
           <CameraController zoom={zoom} zoomChange={zoom}>
             <ambientLight />
             <SolarSytem

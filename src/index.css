@@ -292,3 +292,15 @@ code {
     transform: translate(-40%, -40%);
   }
 }
+
+.name-sect {
+  position: relative;
+  top: 2%;
+  left: 50%;
+  font-size: 25px;
+  margin-bottom: 5%;
+  text-align: center;
+  transform: translate(-50%, 0);
+  align-self: center;
+  font-family: fontUI;
+}

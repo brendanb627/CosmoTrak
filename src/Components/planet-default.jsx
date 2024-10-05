@@ -13,8 +13,9 @@ import {
   Box,
   Grid,
   Paper,
+  Divider,
 } from "@mui/material";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { PlanetInfoLabels } from "../Sub-Components/planet-info-labels";
 
@@ -45,23 +46,15 @@ export const PlanetDefault = ({ planet }) => {
           </EffectComposer>
         </Canvas>
       </div>
-      <PlanetInfoLabels/>
+      <PlanetInfoLabels />
       <div className="info-rect">
         <Box sx={{ height: "51vh" }} className="top-info">
-          <Grid container spacing={2} sx={{top: '5%'}}>
-            <Grid size={4}>
-              {planet.name}
-            </Grid>
-            <Grid size={4}>
-              {planet.size}
-            </Grid>
-            <Grid size={4}>
-              {planet.moons}
-            </Grid>
-            <Grid size={4}>
-              {planet.daysInYear}
-            </Grid>
-          </Grid>
+          <div className="name-sect">The Sun</div>
+          <Divider/>
+          <div className="size-sect">The Sun</div>
+          <div className="moons-sect">The Sun</div>
+          <div className="days-sect">The Sun</div>
+          <div className="type-sect">The Sun</div>
         </Box>
         <Accordion
           sx={{ fontSize: "3vh" }}
