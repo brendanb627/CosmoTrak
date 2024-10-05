@@ -1,10 +1,10 @@
 import React from 'react'
 import { PageLayout } from '../Components/sidebar'
 
-export const Trivia = () => {
+export const PlanetList = () => {
   return (
     <>
-    <PageLayout/>
+        <PageLayout/>
 
     </>
   )

@@ -8,7 +8,6 @@ import { Sun } from './Pages/sun';
 import {Orrery} from './Pages/orrery';
 import {Homepage} from './Pages/homepage';
 import {Asteroids} from "./Pages/hazardous-asteroids"
-import {DataPage} from './Sub-Components/data-restructure';
 import { PlanetMercury } from './Pages/planet-mercury';
 import { PlanetVenus } from './Pages/planet-venus';
 import { PlanetEarth } from './Pages/planet-earth';
@@ -71,7 +70,6 @@ function App() {
             <Route path="/" element={<Homepage/>} />
             <Route path="/trivia" element={<Trivia />} />
             <Route path="/sun" element={<Sun/>} />
-            <Route path="/temp" element={<DataPage />} />
             <Route path="/mercury" element={<PlanetMercury />}/>
             <Route path="/venus" element={<PlanetVenus />}/>
             <Route path="/earth" element={<PlanetEarth />}/>

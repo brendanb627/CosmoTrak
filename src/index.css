@@ -41,11 +41,6 @@ code {
 }
 
 @font-face {
-  font-family: "mainFont";
-  src: url("../public/fonts/Bifocals.otf") format("truetype");
-}
-
-@font-face {
   font-family: "fontUI";
   src: url("../public/fonts/space-age.ttf") format("opentype");
 }

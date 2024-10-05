@@ -16,7 +16,6 @@ import {
 import { PageLayout } from "../Components/sidebar";
 import Slider from "@mui/material/Slider";
 import { randFloat } from "three/src/math/MathUtils.js";
-import Background from "../Components/background";
 import { mercuryVelocity, mercuryPosition } from "../Components/move-planets";
 import { LoadingPage } from "../Components/loading-page";
 
