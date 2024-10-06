@@ -3,7 +3,9 @@ import { PlanetDefault } from "../Components/planet-default";
 
 const Mercury = {
   name: "Mercury",
-  description: "Mercury is the smallest planet in our solar system.",
+  type: "Terrestrial planet",
+
+  summary: "Mercury is the smallest planet in our solar system and the closest to the sun. It is only slightly larger than the earth's moon",
   planetTexture: "mercuryTexture.webp",
   radiantIntensity:"0.001",
   radiant: "0x0000ff",

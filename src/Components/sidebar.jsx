@@ -89,6 +89,10 @@ export const PageLayout = ({selectedPage}) => {
     navigate('/support');
   };
 
+  const DirectToList = () => {
+    navigate('/list');
+  };
+
   return (
     <div className='topsidebar'>
       <Drawer variant="permanent" open={open} sx={{ backgroundColor: 'primary', '& .MuiDrawer-paper': { borderRadius: '10px' } }} anchor="left 1vh">
@@ -129,6 +133,7 @@ export const PageLayout = ({selectedPage}) => {
           <ListItem key="Planet List" disablePadding sx={{ display: 'block' }}>
             <ListItemButton
               sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}
+              onClick={DirectToList}
             >
               <ListItemIcon
                 sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}
@@ -169,8 +174,7 @@ export const PageLayout = ({selectedPage}) => {
               </ListItemIcon>
               <ListItemText primary="About Us" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
-          </ListItem>
-          <ListItem key="Support" disablePadding sx={{ display: 'block' }}>
+          </ListItem><ListItem key="Support" disablePadding sx={{ display: 'block' }}>
             <ListItemButton
               sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}
               onClick={DirectToSupport}

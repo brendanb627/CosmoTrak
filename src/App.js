@@ -68,6 +68,7 @@ function App() {
             <Route path="/orrery" element={<Orrery />} />
             <Route path="/ast" element={<Asteroids />} />
             <Route path="/" element={<Homepage/>} />
+            <Route path="/list" element={<PlanetList />} />
             <Route path="/trivia" element={<Trivia />} />
             <Route path="/sun" element={<Sun/>} />
             <Route path="/mercury" element={<PlanetMercury />}/>
