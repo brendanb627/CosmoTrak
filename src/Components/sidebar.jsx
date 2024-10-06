@@ -11,6 +11,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import StormIcon from '@mui/icons-material/Storm';
 import PublicIcon from '@mui/icons-material/Public';
 import QuizIcon from '@mui/icons-material/Quiz';
+import asteroidIcon from './../Sub-Components/asteroidIcon.png'
 import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
 
 export const PageLayout = ({selectedPage}) => {
@@ -81,6 +82,10 @@ export const PageLayout = ({selectedPage}) => {
     navigate('/orrery');
   };
 
+  const DirectToAsteroids = () => {
+    navigate('/ast');
+  };
+
   const DirectToAboutUs = () => {
     navigate('/about-us');
   };
@@ -143,7 +148,20 @@ export const PageLayout = ({selectedPage}) => {
               <ListItemText primary="Planet List" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
-        </List>
+        <ListItem key="Asteroids" disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}
+              onClick={DirectToAsteroids}
+            >
+              <ListItemIcon
+                sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}
+              >
+                <img src={asteroidIcon} width="25px" alt="Asteroid Icon" style={{ filter: 'invert(1)' }}  />
+              </ListItemIcon>
+              <ListItemText primary="Asteroids" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          </List>
         <Divider />
         <List>
           <ListItem key="Planet Trivia" disablePadding sx={{ display: 'block' }}>
