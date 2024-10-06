@@ -26,7 +26,21 @@ import { mercuryVelocity } from "../Components/move-planets";
 import { LoadingPage } from "../Components/loading-page";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
+
+const Checkboxes = ({ setShowPlanets, showPlanets, setShowOrbits, showOrbits }) => {
+  return (
+    <FormGroup>
+      <FormControlLabel control={<Checkbox defaultChecked checked={showPlanets} onChange={(e) => setShowPlanets(e.target.checked)} />} label="Planets"/>
+      <FormControlLabel control={<Checkbox defaultChecked />} label="Dwarfs" />
+      <FormControlLabel control={<Checkbox defaultChecked checked={showOrbits} onChange={(e) => setShowOrbits(e.target.checked)} />} label="Orbits"/>
+    </FormGroup>
+  );
+
+}
 
 const CameraController = ({ children }) => {
   const { camera, gl, scene } = useThree();
@@ -65,7 +79,10 @@ const SolarSytem = ({
   setIsLoading,
   isLoading,
   language,
+  showPlanets,
+  showOrbits,
 }) => {
+  
   const { camera } = useThree();
   const scale = 2000000; // solar system scale
   const size = useContext(sizeContext);
@@ -247,9 +264,11 @@ const SolarSytem = ({
 
   // });
 
-
+  
   return (
     <>
+      {showOrbits &&
+      <>
       <mesh position={[0, 0, 0]}>
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="yellow" />
@@ -278,6 +297,8 @@ const SolarSytem = ({
       <mesh position={[0, 0, 0]}>
         <NeptuneOrbit color="pink" />
       </mesh>
+</>
+}
       <mesh
         position={[
           MercuryCoordinates.x / scale,
@@ -292,7 +313,8 @@ const SolarSytem = ({
       {isLoading === false &&
         Math.abs(camera.position.x) < 540 &&
         Math.abs(camera.position.y) < 540 &&
-        Math.abs(camera.position.z) < 540 && (
+        Math.abs(camera.position.z) < 540 &&
+        showPlanets && (
           <PlanetLabel
             position={MercuryCoordinates}
             scale={scale}
@@ -319,7 +341,8 @@ const SolarSytem = ({
       {isLoading === false &&
         Math.abs(camera.position.x) < 600 &&
         Math.abs(camera.position.y) < 600 &&
-        Math.abs(camera.position.z) < 600 && (
+        Math.abs(camera.position.z) < 600 &&
+        showPlanets &&  (
           <PlanetLabel
             position={VenusCoordinates}
             scale={scale}
@@ -329,6 +352,7 @@ const SolarSytem = ({
             link={"/venus"}
             textMargin={"130px"}
           />
+        
         )}
 
 
@@ -346,7 +370,8 @@ const SolarSytem = ({
       {isLoading === false &&
         Math.abs(camera.position.x) < 570 &&
         Math.abs(camera.position.y) < 570 &&
-        Math.abs(camera.position.z) < 570 && (
+        Math.abs(camera.position.z) < 570 && 
+        showPlanets &&  (
           <PlanetLabel
             position={EarthCoordinates}
             scale={scale}
@@ -371,7 +396,8 @@ const SolarSytem = ({
       {isLoading === false &&
         Math.abs(camera.position.x) < 600 &&
         Math.abs(camera.position.y) < 600 &&
-        Math.abs(camera.position.z) < 600 && (
+        Math.abs(camera.position.z) < 600 &&
+        showPlanets && (  
           <PlanetLabel
             position={MarsCoordinates}
             scale={scale}
@@ -396,7 +422,8 @@ const SolarSytem = ({
       {isLoading === false &&
         Math.abs(camera.position.x) < 4500 &&
         Math.abs(camera.position.y) < 4500 &&
-        Math.abs(camera.position.z) < 4500 && (
+        Math.abs(camera.position.z) < 4500 &&
+        showPlanets && (
           <PlanetLabel
             position={SaturnCoordinates}
             scale={scale}
@@ -418,7 +445,8 @@ const SolarSytem = ({
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="skyblue" />
       </mesh>
-      {isLoading === false && (
+      {isLoading === false && 
+      showPlanets &&  (
         <PlanetLabel
           position={JupiterCoordinates}
           scale={scale}
@@ -442,7 +470,8 @@ const SolarSytem = ({
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="skyblue" />
       </mesh>
-      {isLoading === false && (
+      {isLoading === false &&
+        showPlanets && (
         <PlanetLabel
           position={UranusCoordinates}
           scale={scale}
@@ -464,7 +493,8 @@ const SolarSytem = ({
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="skyblue" />
       </mesh>
-      {NeptuneCoordinates.x && (
+      {NeptuneCoordinates.x &&
+        showPlanets &&  (
         <PlanetLabel
           position={NeptuneCoordinates}
           scale={scale}
@@ -481,6 +511,9 @@ const SolarSytem = ({
 
 
 export function Orrery() {
+  const [showPlanets, setShowPlanets] = useState(true)
+  const [showOrbits, setShowOrbits] = useState(true)
+
   const [zoom, setZoom] = useState(1);
   const [value, setValue] = useState(400);
   const [sliderDirection, setSliderDirection] = useState(1);
@@ -525,6 +558,8 @@ export function Orrery() {
               setIsLoading={setIsLoading}
               isLoading={isLoading}
               language={language}
+              showPlanets={showPlanets}
+              showOrbits={showOrbits}
             />
           </CameraController>
         </Canvas>
@@ -553,6 +588,7 @@ export function Orrery() {
           display: "flex",
           justifyContent: "flex-end", // Aligns the language box to the right
           marginBottom: "16px",
+          
         }}
       >
         <Select
@@ -606,6 +642,17 @@ export function Orrery() {
           <MenuItem value="vi">Vietnamese</MenuItem>
         </Select>
       </Box>
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          marginBottom: '16px',
+          marginRight: '16px',
+        }}
+      >
+<Checkboxes showPlanets={showPlanets} setShowPlanets={setShowPlanets} setShowOrbits={setShowOrbits} showOrbits={showOrbits}></Checkboxes>      
+</Box>
     </>
   );
 }
