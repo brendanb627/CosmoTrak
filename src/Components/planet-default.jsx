@@ -49,15 +49,19 @@ export const PlanetDefault = ({ planet }) => {
       <PlanetInfoLabels />
       <div className="info-rect">
         <Box sx={{ height: "51vh" }} className="top-info">
-          <div className="name-sect">The Sun</div>
+          <div className="name-sect">{planet.name}</div>
           <Divider/>
-          <div className="size-sect">The Sun</div>
-          <div className="moons-sect">The Sun</div>
-          <div className="days-sect">The Sun</div>
-          <div className="type-sect">The Sun</div>
+          <div className="type-sect">{planet.type}</div>
+          <Divider/>
+          <div className="sum-sect">{planet.summary}</div>
+          <Divider/>
+          <div className="size-sect">Size: {planet.size}</div>
+          <div className="size-sect">Size: {planet.size}</div>
+          <div className="moons-sect">Moons: {planet.moons}</div>
+          <div className="days-sect">Orbital period: {planet.size}</div>
         </Box>
         <Accordion
-          sx={{ fontSize: "3vh" }}
+          sx={{ fontSize: "2.8vh" }}
           className="accordion"
           variant="outlined"
         >
@@ -72,7 +76,7 @@ export const PlanetDefault = ({ planet }) => {
           <AccordionDetails>{planet.geoDef}</AccordionDetails>
         </Accordion>
         <Accordion
-          sx={{ fontSize: "3vh" }}
+          sx={{ fontSize: "2.8vh" }}
           className="accordion"
           variant="outlined"
         >
@@ -87,7 +91,7 @@ export const PlanetDefault = ({ planet }) => {
           <AccordionDetails>{planet.atmDef}</AccordionDetails>
         </Accordion>
         <Accordion
-          sx={{ fontSize: "3vh" }}
+          sx={{ fontSize: "2.8vh" }}
           className="accordion"
           variant="outlined"
         >
@@ -102,7 +106,7 @@ export const PlanetDefault = ({ planet }) => {
           <AccordionDetails>{planet.orbDef}</AccordionDetails>
         </Accordion>
         <Accordion
-          sx={{ fontSize: "3vh" }}
+          sx={{ fontSize: "2.8vh" }}
           className="accordion"
           variant="outlined"
         >
