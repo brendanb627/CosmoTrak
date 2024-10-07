@@ -190,7 +190,6 @@ const SolarSytem = ({
       );
 
       const data = await response.json();
-      console.log(data);
       setCoordinates({
         x: parseInt(data.user.x.N),
         y: parseInt(data.user.y.N),
@@ -299,7 +298,6 @@ const SolarSytem = ({
   //  MercuryCoordinates.z += mercuryVelocity[currentDay][2] * 1000;
 
   // });
-  console.log(showDwarfs);
   return (
     <>
       {showOrbits && (
