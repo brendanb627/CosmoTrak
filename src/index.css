@@ -266,6 +266,11 @@ code {
   transform-origin: center; /* Add this line */
 }
 
+.circle2-svg {
+  transform-origin: center;
+  
+}
+
 .about-rect {
   position: absolute;
   top: 50%;

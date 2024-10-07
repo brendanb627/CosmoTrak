@@ -15,18 +15,9 @@ import AWS from "aws-sdk";
 import { fetchPlanetsCoordinates } from "./handler";
 
 // Create an instance of the Amazon Translate service
-const translate = new AWS.Translate();
 
-const translateText = async (text, targetLanguage) => {
-  const params = {
-    Text: text,
-    SourceLanguageCode: "en", // Source language (English in this case)
-    TargetLanguageCode: targetLanguage, // Target language (e.g., 'es' for Spanish)
-  };
 
-  const translation = await translate.translateText(params).promise();
-  return translation.TranslatedText;
-};
+
 
 export const AsteroidCard = ({
   name,
@@ -39,6 +30,16 @@ export const AsteroidCard = ({
   onPrevious,
   onNext,
 }) => {
+  const translateText = async (text, targetLanguage) => {
+    const params = {
+      Text: text,
+      SourceLanguageCode: "en", // Source language (English in this case)
+      TargetLanguageCode: targetLanguage, // Target language (e.g., 'es' for Spanish)
+    };
+  
+    const translation = await translate.translateText(params).promise();
+    return translation.TranslatedText;
+  };
   const [coordinates, setCoordinates] = useState("");
   const [numrun, setNumrun] = useState(true);
   if (numrun) {
@@ -46,14 +47,16 @@ export const AsteroidCard = ({
   }
   const a2 = `${coordinates.x}`;
   const yay2 = `${coordinates.y}`;
-  // Configure AWS with your credentials
 
-  const cleanedk = yay2.trim();
+  // Configure AWS with your credentials
+  const translate = new AWS.Translate();
+  const cleanedSecretKey = yay2.trim();
   AWS.config.update({
     accessKeyId: a2,
-    secretAccessKey: cleanedk,
+    secretAccessKey: cleanedSecretKey,
     region: "us-east-1",
   });
+
   const [language, setLanguage] = useState("en"); // Default language is English
   const [translatedName, setTranslatedName] = useState("");
   const [translatedDiameter, setTranslatedDiameter] = useState("");
