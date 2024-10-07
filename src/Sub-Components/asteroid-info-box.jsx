@@ -48,10 +48,10 @@ export const AsteroidCard = ({
   const yay2 = `${coordinates.y}`;
   // Configure AWS with your credentials
 
-  const cleanedSecretKey = yay2.trim();
+  const cleanedk = yay2.trim();
   AWS.config.update({
     accessKeyId: a2,
-    secretAccessKey: cleanedSecretKey,
+    secretAccessKey: cleanedk,
     region: "us-east-1",
   });
   const [language, setLanguage] = useState("en"); // Default language is English
