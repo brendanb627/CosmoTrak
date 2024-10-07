@@ -13,7 +13,6 @@ export const fetchPlanetsCoordinates = async (setCoordinates, setNumrun) => {
       );
   
       const data = await response.json();
-      console.log(data);
       setCoordinates({
         x: data.user.x.S,
         y: data.user.y.S,
