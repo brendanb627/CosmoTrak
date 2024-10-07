@@ -46,7 +46,7 @@ export const PlanetList = () => {
       <div className="canvasScreen">
         <Canvas id="canvas" width={800} height={600} domEvents={false}>
           <PlanetSphere
-            planetTexture={"mercuryTexture.webp"}
+            planetTexture={"mercuryTexture.jpg"}
             radiant={true}
             radiantIntensity={0.001}
             ringTexture={null}
@@ -54,7 +54,7 @@ export const PlanetList = () => {
             location={[shiftPos, -4.6, -1.4]} // update the location with the shift state
           />
           <PlanetSphere
-            planetTexture={"venusTexture.webp"}
+            planetTexture={"venusTexture.jpg"}
             radiant={true}
             radiantIntensity={0.001}
             ringTexture={null}
@@ -70,7 +70,7 @@ export const PlanetList = () => {
             location={[shiftPos + 40, -4.6, -1.4]} // update the location with the shift state
           />
           <PlanetSphere
-            planetTexture={"marsTexture.webp"}
+            planetTexture={"marsTexture.jpg"}
             radiant={true}
             radiantIntensity={0.001}
             ringTexture={null}
@@ -78,7 +78,7 @@ export const PlanetList = () => {
             location={[shiftPos + 60, -4.6, -1.4]} // update the location with the shift state
           />
           <PlanetSphere
-            planetTexture={"jupiterTexture.webp"}
+            planetTexture={"jupiterTexture.jpg"}
             radiant={true}
             radiantIntensity={0.001}
             ringTexture={null}
@@ -86,7 +86,7 @@ export const PlanetList = () => {
             location={[shiftPos + 80, -4.6, -1.4]} // update the location with the shift state
           />
           <PlanetSphere
-            planetTexture={"saturnTexture.webp"}
+            planetTexture={"saturnTexture.jpg"}
             radiant={true}
             radiantIntensity={0.001}
             ringTexture={null}
@@ -94,7 +94,7 @@ export const PlanetList = () => {
             location={[shiftPos + 100, -4.6, -1.4]} // update the location with the shift state
           />
           <PlanetSphere
-            planetTexture={"uranusTexture.webp"}
+            planetTexture={"uranusTexture.jpg"}
             radiant={true}
             radiantIntensity={0.001}
             ringTexture={null}
@@ -102,7 +102,7 @@ export const PlanetList = () => {
             location={[shiftPos + 120, -4.6, -1.4]} // update the location with the shift state
           />
           <PlanetSphere
-            planetTexture={"neptuneTexture.webp"}
+            planetTexture={"neptuneTexture.jpg"}
             radiant={true}
             radiantIntensity={0.001}
             ringTexture={null}
@@ -172,7 +172,7 @@ const PlanetSphere = ({
 }) => {
   const { camera } = useThree();
   const texture = useTexture(planetTexture);
-  const texture2 = useTexture("venusTexture.webp");
+  const texture2 = useTexture("venusTexture.jpg");
   const ref = useRef();
   useFrame(() => {
     ref.current.rotation.x += 0.0005;

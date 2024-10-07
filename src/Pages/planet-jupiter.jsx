@@ -24,7 +24,7 @@ const JupiterLevels = {
     moons: "79 (Biggest: Ganymede)",
     orbPer: "1 day = 10 Earth hours",
     summary: "Jupiter is the largest planet in our solar system. It is mostly made of gas and has strong winds.",
-    planetTexture: "jupiterTexture.webp",
+    planetTexture: "jupiterTexture.jpg",
     radiantIntensity: "0.002",
     radiant: "0xffd700",
     geoDef: "Jupiter does not have a solid surface like Earth. It is made mostly of gas, such as hydrogen and helium.",

@@ -23,7 +23,7 @@ const sun = {
     name: "Object: Sun",
     info: "The Sun is the star at the center of the solar system and is the primary source of light and energy for our planet.",
     gravity: "The surface gravity of the Sun is approximately 274.0 m/s^2",
-    planetTexture: "sunTexture.webp",
+    planetTexture: "sunTexture.jpg",
     radiantIntensity:"0.001",
     radiant: "FF7A05",
     mass: "The mass of the Sun is approximately 1.989 x 10^3",
