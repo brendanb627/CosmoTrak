@@ -30,7 +30,7 @@ export const AsteroidLabel = ({ name }) => {
           </svg>
           <Box>
             <div
-              style={{ color: "white", marginLeft: "100px", width: "200px", marginTop: "50px", }}
+              style={{ color: "white", marginLeft: "-10px", width: "300px", marginTop: "75px", }}
               className=""
             >
               {name}

@@ -15,7 +15,7 @@ import {
   PlutoOrbit,
   MakemakeOrbit,
   CeresOrbit,
-  ErisOrbit
+  ErisOrbit,
 } from "../Sub-Components/planet-orbits";
 import { PageLayout } from "../Components/sidebar";
 import Slider from "@mui/material/Slider";
@@ -27,6 +27,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { fetchPlanetsCoordinates } from "../Sub-Components/handler";
 
 const Checkboxes = ({
   setShowPlanets,
@@ -174,7 +175,7 @@ const SolarSytem = ({
   const [HaumeaCoordinates, setHaumeaCoordinates] = useState([]);
   const [MakemakeCoordinates, setMakemakeCoordinates] = useState([]);
 
-  const fetchPlanetsCoordinates = async (command, setCoordinates) => {
+  const fetchPlanetsCoordinatesMain = async (command, setCoordinates) => {
     try {
       const response = await fetch(
         `https://kekrvok46l.execute-api.us-east-1.amazonaws.com/test/user?date=${currentDate}&id=${command}`,
@@ -201,43 +202,43 @@ const SolarSytem = ({
   };
   //fetch data for each planet in solar system
   const fetchMercuryCoordinates = async () =>
-    await fetchPlanetsCoordinates(199, setMercuryCoordinates);
+    await fetchPlanetsCoordinatesMain(199, setMercuryCoordinates);
 
   const fetchVenusCoordinates = () =>
-    fetchPlanetsCoordinates(299, setVenusCoordinates);
+    fetchPlanetsCoordinatesMain(299, setVenusCoordinates);
 
   const fetchEarthCoordinates = () =>
-    fetchPlanetsCoordinates(399, setEarthCoordinates);
+    fetchPlanetsCoordinatesMain(399, setEarthCoordinates);
 
   const fetchMarsCoordinates = () =>
-    fetchPlanetsCoordinates(499, setMarsCoordinates);
+    fetchPlanetsCoordinatesMain(499, setMarsCoordinates);
 
   const fetchJupiterCoordinates = () =>
-    fetchPlanetsCoordinates(599, setJupiterCoordinates);
+    fetchPlanetsCoordinatesMain(599, setJupiterCoordinates);
 
   const fetchSaturnCoordinates = () =>
-    fetchPlanetsCoordinates(699, setSaturnCoordinates);
+    fetchPlanetsCoordinatesMain(699, setSaturnCoordinates);
 
   const fetchUranusCoordinates = async () =>
-    await fetchPlanetsCoordinates(799, setUranusCoordinates);
+    await fetchPlanetsCoordinatesMain(799, setUranusCoordinates);
 
   const fetchNeptuneCoordinates = async () =>
-    await fetchPlanetsCoordinates(899, setNeptuneCoordinates);
+    await fetchPlanetsCoordinatesMain(899, setNeptuneCoordinates);
 
   const fetchPlutoCoordinates = async () =>
-    await fetchPlanetsCoordinates(999, setPlutoCoordinates);
+    await fetchPlanetsCoordinatesMain(999, setPlutoCoordinates);
 
   const fetchMakemakeCoordinates = async () =>
-    await fetchPlanetsCoordinates(136472, setMakemakeCoordinates);
+    await fetchPlanetsCoordinatesMain(136472, setMakemakeCoordinates);
 
   const fetchCeresCoordinates = async () =>
-    await fetchPlanetsCoordinates(2000001, setCeresCoordinates);
+    await fetchPlanetsCoordinatesMain(2000001, setCeresCoordinates);
 
   const fetchErisCoordinates = async () =>
-    await fetchPlanetsCoordinates(136199, setErisCoordinates);
+    await fetchPlanetsCoordinatesMain(136199, setErisCoordinates);
 
   const fetchHaumeaCoordinates = async () =>
-    await fetchPlanetsCoordinates(136108, setHaumeaCoordinates);
+    await fetchPlanetsCoordinatesMain(136108, setHaumeaCoordinates);
 
   useEffect(() => {
     const fetchPlanetData = async () => {
@@ -254,8 +255,6 @@ const SolarSytem = ({
       await fetchErisCoordinates();
       await fetchCeresCoordinates();
       await fetchHaumeaCoordinates();
-      
-      
     };
 
     fetchPlanetData();
@@ -300,7 +299,7 @@ const SolarSytem = ({
   //  MercuryCoordinates.z += mercuryVelocity[currentDay][2] * 1000;
 
   // });
-console.log(showDwarfs)
+  console.log(showDwarfs);
   return (
     <>
       {showOrbits && (
@@ -333,15 +332,17 @@ console.log(showDwarfs)
           <mesh position={[0, 0, 0]}>
             <NeptuneOrbit color="pink" />
           </mesh>
-        </>)}
-        {showDwarfs &&
-          showPlanets && (
-          <>
+        </>
+      )}
+      {showDwarfs && showPlanets && (
+        <>
           <mesh position={[0, 0, 0]}>
             {PlutoCoordinates?.x && <PlutoOrbit color="rgb(80, 80, 80)" />}
           </mesh>
           <mesh position={[0, 0, 0]}>
-            {MakemakeCoordinates?.x && <MakemakeOrbit color="rgb(80, 80, 80)" />}
+            {MakemakeCoordinates?.x && (
+              <MakemakeOrbit color="rgb(80, 80, 80)" />
+            )}
           </mesh>
           <mesh position={[0, 0, 0]}>
             {CeresCoordinates?.x && <CeresOrbit color="rgb(80, 80, 80)" />}
@@ -349,8 +350,8 @@ console.log(showDwarfs)
           <mesh position={[0, 0, 0]}>
             <ErisOrbit color="rgb(80, 80, 80)" />
           </mesh>
-          </>
-          )}
+        </>
+      )}
 
       <mesh
         position={[
@@ -363,21 +364,17 @@ console.log(showDwarfs)
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="skyblue" />
       </mesh>
-      {isLoading === false &&
-        Math.abs(camera.position.x) < 540 &&
-        Math.abs(camera.position.y) < 540 &&
-        Math.abs(camera.position.z) < 540 &&
-        showPlanets && (
-          <PlanetLabel
-            position={MercuryCoordinates}
-            scale={scale}
-            language={language}
-            color={"purple"}
-            name={"Mercury"}
-            link={"/mercury"}
-            textMargin={"150px"}
-          />
-        )}
+      {isLoading === false && showPlanets && (
+        <PlanetLabel
+          position={MercuryCoordinates}
+          scale={scale}
+          language={language}
+          color={"purple"}
+          name={"Mercury"}
+          link={"/mercury"}
+          textMargin={"150px"}
+        />
+      )}
 
       <mesh
         position={[
@@ -390,21 +387,17 @@ console.log(showDwarfs)
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="skyblue" />
       </mesh>
-      {isLoading === false &&
-        Math.abs(camera.position.x) < 600 &&
-        Math.abs(camera.position.y) < 600 &&
-        Math.abs(camera.position.z) < 600 &&
-        showPlanets && (
-          <PlanetLabel
-            position={VenusCoordinates}
-            scale={scale}
-            language={language}
-            color={"lightBlue"}
-            name={"Venus"}
-            link={"/venus"}
-            textMargin={"130px"}
-          />
-        )}
+      {isLoading === false && showPlanets && (
+        <PlanetLabel
+          position={VenusCoordinates}
+          scale={scale}
+          language={language}
+          color={"lightBlue"}
+          name={"Venus"}
+          link={"/venus"}
+          textMargin={"130px"}
+        />
+      )}
 
       <mesh
         position={[
@@ -417,21 +410,17 @@ console.log(showDwarfs)
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="skyblue" />
       </mesh>
-      {isLoading === false &&
-        Math.abs(camera.position.x) < 570 &&
-        Math.abs(camera.position.y) < 570 &&
-        Math.abs(camera.position.z) < 570 &&
-        showPlanets && (
-          <PlanetLabel
-            position={EarthCoordinates}
-            scale={scale}
-            language={language}
-            color={"lightGreen"}
-            name={"Earth"}
-            link={"/earth"}
-            textMargin={"140px"}
-          />
-        )}
+      {isLoading === false && showPlanets && (
+        <PlanetLabel
+          position={EarthCoordinates}
+          scale={scale}
+          language={language}
+          color={"lightGreen"}
+          name={"Earth"}
+          link={"/earth"}
+          textMargin={"140px"}
+        />
+      )}
       <mesh
         position={[
           MarsCoordinates.x / scale,
@@ -443,21 +432,17 @@ console.log(showDwarfs)
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="skyblue" />
       </mesh>
-      {isLoading === false &&
-        Math.abs(camera.position.x) < 600 &&
-        Math.abs(camera.position.y) < 600 &&
-        Math.abs(camera.position.z) < 600 &&
-        showPlanets && (
-          <PlanetLabel
-            position={MarsCoordinates}
-            scale={scale}
-            language={language}
-            color={"orange"}
-            name={"Mars"}
-            link={"/mars"}
-            textMargin={"120px"}
-          />
-        )}
+      {isLoading === false && showPlanets && (
+        <PlanetLabel
+          position={MarsCoordinates}
+          scale={scale}
+          language={language}
+          color={"orange"}
+          name={"Mars"}
+          link={"/mars"}
+          textMargin={"120px"}
+        />
+      )}
       <mesh
         position={[
           SaturnCoordinates.x / scale,
@@ -469,21 +454,17 @@ console.log(showDwarfs)
         <sphereGeometry attach="geometry" args={[1, 32, 32]} />
         <meshPhongMaterial attach="material" color="skyblue" />
       </mesh>
-      {isLoading === false &&
-        Math.abs(camera.position.x) < 4500 &&
-        Math.abs(camera.position.y) < 4500 &&
-        Math.abs(camera.position.z) < 4500 &&
-        showPlanets && (
-          <PlanetLabel
-            position={SaturnCoordinates}
-            scale={scale}
-            language={language}
-            color={"yellow"}
-            name={"Saturn"}
-            link={"/saturn"}
-            textMargin={"145px"}
-          />
-        )}
+      {isLoading === false && showPlanets && (
+        <PlanetLabel
+          position={SaturnCoordinates}
+          scale={scale}
+          language={language}
+          color={"yellow"}
+          name={"Saturn"}
+          link={"/saturn"}
+          textMargin={"145px"}
+        />
+      )}
       <mesh
         position={[
           JupiterCoordinates.x / scale,
@@ -561,8 +542,6 @@ console.log(showDwarfs)
           link={"/neptune"}
           textMargin={"150px"}
         />
-        
-        
       )}
       {CeresCoordinates.x && showPlanets && showDwarfs && (
         <PlanetLabel
@@ -574,8 +553,6 @@ console.log(showDwarfs)
           link={"/neptune"}
           textMargin={"150px"}
         />
-        
-        
       )}
       {ErisCoordinates.x && showPlanets && showDwarfs && (
         <PlanetLabel
@@ -587,8 +564,6 @@ console.log(showDwarfs)
           link={"/neptune"}
           textMargin={"150px"}
         />
-        
-        
       )}
       {MakemakeCoordinates.x && showPlanets && showDwarfs && (
         <PlanetLabel
@@ -600,8 +575,6 @@ console.log(showDwarfs)
           link={"/neptune"}
           textMargin={"150px"}
         />
-        
-        
       )}
     </>
   );

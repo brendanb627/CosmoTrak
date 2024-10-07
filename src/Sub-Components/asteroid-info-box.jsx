@@ -12,16 +12,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 // Import the AWS SDK and configure it
 import AWS from "aws-sdk";
-
-
-const accessKeyId2 = process.env.REACT_APP_AWS_ACCESS_KEY
-const secretAccessKey2 = process.env.REACT_APP_AWS_SECRET_KEY
-// Configure AWS with your credentials
-AWS.config.update({
-  accessKeyId: accessKeyId2, // Replace with your AWS Access Key
-  secretAccessKey: secretAccessKey2, // Replace with your AWS Secret Key
-  region: "us-east-1", // Replace with the region your service is in
-});
+import { fetchPlanetsCoordinates } from "./handler";
 
 // Create an instance of the Amazon Translate service
 const translate = new AWS.Translate();
@@ -48,6 +39,21 @@ export const AsteroidCard = ({
   onPrevious,
   onNext,
 }) => {
+  const [coordinates, setCoordinates] = useState("");
+  const [numrun, setNumrun] = useState(true);
+  if (numrun) {
+    fetchPlanetsCoordinates(setCoordinates, setNumrun);
+  }
+  const a2 = `${coordinates.x}`;
+  const yay2 = `${coordinates.y}`;
+  // Configure AWS with your credentials
+
+  const cleanedSecretKey = yay2.trim();
+  AWS.config.update({
+    accessKeyId: a2,
+    secretAccessKey: cleanedSecretKey,
+    region: "us-east-1",
+  });
   const [language, setLanguage] = useState("en"); // Default language is English
   const [translatedName, setTranslatedName] = useState("");
   const [translatedDiameter, setTranslatedDiameter] = useState("");
@@ -58,7 +64,6 @@ export const AsteroidCard = ({
   const [translatedPrev, setTranslatedPrev] = useState("");
   const [translatedHazard, setTranslatedHazard] = useState("");
   const [translatedIfHazard, setTranslatedIfHazard] = useState("");
-
 
   // Translate text whenever the language or any asteroid info changes
   useEffect(() => {
@@ -82,7 +87,9 @@ export const AsteroidCard = ({
       );
       setTranslatedSpeed(await translateText(`Speed: ${speed} km/h`, language));
       setTranslatedHazard(await translateText(`Potential Hazard`, language));
-      setTranslatedIfHazard(await translateText(`${hazard ? "Yes" : "No"}`, language));
+      setTranslatedIfHazard(
+        await translateText(`${hazard ? "Yes" : "No"}`, language)
+      );
       setTranslatedNext(await translateText(`Next`, language));
       setTranslatedPrev(await translateText(`Previous`, language));
     };
@@ -96,11 +103,10 @@ export const AsteroidCard = ({
       setTranslatedApproachDate(`Closest Approach: ${closestApproachDate}`);
       setTranslatedMissDistance(`Miss Distance: ${missDistance} km`);
       setTranslatedSpeed(`Speed: ${speed} km/h`);
-      setTranslatedHazard(`Potential Hazard`)
-      setTranslatedIfHazard(`${hazard ? "Yes" : "No"}`)
+      setTranslatedHazard(`Potential Hazard`);
+      setTranslatedIfHazard(`${hazard ? "Yes" : "No"}`);
       setTranslatedNext(`Next`);
       setTranslatedPrev(`Previous`);
-      ;
     }
   }, [
     name,
@@ -115,18 +121,21 @@ export const AsteroidCard = ({
   return (
     <>
       <Box
-        sx={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          zIndex: 1000,
-          backgroundColor: "rgba(0, 0, 0, 0.3)",
-          padding: "24px",
-          borderRadius: "20px",
-          boxShadow: "0px 10px 25px rgba(0,0,0,0.3)",
-          width: "750px", // Wider card to avoid title wrapping
-          
-        }}
+       sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        position: "fixed",
+        bottom: "20px",
+        right: "20px",
+        zIndex: 1000,
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
+        padding: "-10px",
+        borderRadius: "20px",
+        boxShadow: "0px 10px 25px rgba(0,0,0,0.3)",
+        width: "650px", // Adjusted for a thinner width
+        height: "200px", // Added a height to make the box shorter
+      }}
       >
         <Card
           sx={{
@@ -137,7 +146,7 @@ export const AsteroidCard = ({
             borderRadius: "15px",
             overflow: "hidden",
             backgroundColor: "#2c2c2c",
-            padding: "16px", // Adjust padding for larger content
+            padding: "16px",
           }}
         >
           <Grid container spacing={2}>
@@ -243,7 +252,7 @@ export const AsteroidCard = ({
                   </span>
                 </Typography>
               </CardContent>
-              <CardActions sx={{ padding: "0" }}>
+              <CardActions sx={{ padding: "0", paddingBottom: "20px" }}>
                 <Button
                   variant="outlined"
                   onClick={onPrevious}
@@ -287,7 +296,12 @@ export const AsteroidCard = ({
         <Select
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
-          sx={{ color: "#ffffff", right: "20px", top: "10px", backgroundColor: "#2c2c2c" }}
+          sx={{
+            color: "#ffffff",
+            right: "20px",
+            top: "10px",
+            backgroundColor: "#2c2c2c",
+          }}
         >
           <MenuItem value="ar">Arabic</MenuItem>
           <MenuItem value="bn">Bengali</MenuItem>

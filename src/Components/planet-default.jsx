@@ -18,9 +18,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { PlanetInfoLabels } from "../Sub-Components/planet-info-labels";
 import AWS from "aws-sdk";
-
-
-const translate = new AWS.Translate();
+import { fetchPlanetsCoordinates } from "./../Sub-Components/handler";
 
 const PlanetSphere = ({ planetTexture, radiant, radiantIntensity }) => {
   const { camera } = useThree();
@@ -67,12 +65,29 @@ const PlanetSphere = ({ planetTexture, radiant, radiantIntensity }) => {
 };
 
 // Main PlanetDefault component
-export const PlanetDefault = ({planetDatas}) => {
+
+export const PlanetDefault = ({ planetDatas }) => {
+  const [coordinates, setCoordinates] = useState("");
+  const [numrun, setNumrun] = useState(true);
+  if (numrun) {
+    fetchPlanetsCoordinates(setCoordinates, setNumrun);
+  }
+  const a2 = `${coordinates.x}`;
+  const yay2 = `${coordinates.y}`;
+  // Configure AWS with your credentials
+  const translate = new AWS.Translate();
+  const cleanedK = yay2.trim();
+  AWS.config.update({
+    accessKeyId: a2,
+    secretAccessKey: cleanedK,
+    region: "us-east-1",
+  });
+
   const [language, setLanguage] = useState("en");
-  const [readingLevel, setReadingLevel] = useState("h1050"); 
-  console.log(planetDatas[readingLevel])// Default reading level
-  const planetData = (planetDatas[readingLevel]); // Retrieve planet data based on reading level
-  console.log("pd = ",planetData)
+  const [readingLevel, setReadingLevel] = useState("h1050");
+  console.log(planetDatas[readingLevel]); // Default reading level
+  const planetData = planetDatas[readingLevel]; // Retrieve planet data based on reading level
+  console.log("pd = ", planetData);
 
   const [translatedName, setTranslatedName] = useState(planetData.name);
   const [translatedType, setTranslatedType] = useState(planetData.type);
@@ -80,10 +95,13 @@ export const PlanetDefault = ({planetDatas}) => {
   const [translatedAtmDef, setTranslatedAtmDef] = useState(planetData.atmDef);
   const [translatedOrbDef, setTranslatedOrbDef] = useState(planetData.orbDef);
   const [translatedExpDef, setTranslatedExpDef] = useState(planetData.expDef);
-  const [translatedSummary, setTranslatedSummary] = useState(planetData.summary);
+  const [translatedSummary, setTranslatedSummary] = useState(
+    planetData.summary
+  );
   const [planetDetailsSize, setPlanetDetailsSize] = useState("Size");
   const [planetDetailsMoons, setPlanetDetailsMoons] = useState("Moons");
-  const [planetDetailsOrbital, setPlanetDetailsOrbital] = useState("Orbital Period");
+  const [planetDetailsOrbital, setPlanetDetailsOrbital] =
+    useState("Orbital Period");
   const [translatedSize, setTranslatedSize] = useState(planetData.size);
   const [translatedMoons, setTranslatedMoons] = useState(planetData.moons);
   const [translatedOrbPer, setTranslatedOrbPer] = useState(planetData.orbPer);
@@ -91,7 +109,8 @@ export const PlanetDefault = ({planetDatas}) => {
   const [atmTitle, setAtmTitle] = useState("Atmosphere and Climate");
   const [orbTitle, setOrbTitle] = useState("Orbital Characteristics");
   const [expTitle, setExpTitle] = useState("Exploration and Research");
-  const [planetDetailsTitle, setPlanetDetailsTitle] = useState("Planet Details");
+  const [planetDetailsTitle, setPlanetDetailsTitle] =
+    useState("Planet Details");
 
   const translateText = async (text, targetLanguage) => {
     const params = {
@@ -111,7 +130,9 @@ export const PlanetDefault = ({planetDatas}) => {
         setTranslatedSummary(await translateText(planetData.summary, language));
         setPlanetDetailsSize(await translateText("Size", language));
         setPlanetDetailsMoons(await translateText("Moons", language));
-        setPlanetDetailsOrbital(await translateText("Orbital Period", language));
+        setPlanetDetailsOrbital(
+          await translateText("Orbital Period", language)
+        );
         setTranslatedSize(await translateText(planetData.size, language));
         setTranslatedMoons(await translateText(planetData.moons, language));
         setTranslatedOrbPer(await translateText(planetData.orbPer, language));
@@ -124,15 +145,14 @@ export const PlanetDefault = ({planetDatas}) => {
         setOrbTitle(await translateText("Orbital Characteristics", language));
         setExpTitle(await translateText("Exploration and Research", language));
         setPlanetDetailsTitle(await translateText("Planet Details", language));
-        
       } else {
         // Reset to English if no translation is needed
         setTranslatedName(planetData.name);
         setTranslatedType(planetData.type);
         setTranslatedSummary(planetData.summary);
-        setPlanetDetailsSize("Size")
-        setPlanetDetailsMoons("Moons")
-        setPlanetDetailsOrbital("Orbital Period")
+        setPlanetDetailsSize("Size");
+        setPlanetDetailsMoons("Moons");
+        setPlanetDetailsOrbital("Orbital Period");
         setTranslatedSize(planetData.size);
         setTranslatedMoons(planetData.moons);
         setTranslatedOrbPer(planetData.orbPer);
@@ -145,10 +165,8 @@ export const PlanetDefault = ({planetDatas}) => {
         setOrbTitle("Orbital Characteristics");
         setExpTitle("Exploration and Research");
         setPlanetDetailsTitle("Planet Details");
-        
       }
-    
-    }
+    };
     translateAll();
   }, [language, readingLevel, planetData]);
 
@@ -190,21 +208,35 @@ export const PlanetDefault = ({planetDatas}) => {
         </Box>
 
         {/* Planet Details */}
-        <Accordion sx={{ fontSize: "2.8vh" }} className="accordion" variant="outlined">
+        <Accordion
+          sx={{ fontSize: "2.8vh" }}
+          className="accordion"
+          variant="outlined"
+        >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             {planetDetailsTitle}
           </AccordionSummary>
           <AccordionDetails>
-          <div className="sum-sect">{translatedSummary}</div>
-          <Divider />
-          <div className="size-sect">{planetDetailsSize}: {translatedSize}</div>
-          <div className="moons-sect">{planetDetailsMoons}: {translatedMoons}</div>
-          <div className="days-sect">{planetDetailsOrbital}: {translatedOrbPer}</div>
+            <div className="sum-sect">{translatedSummary}</div>
+            <Divider />
+            <div className="size-sect">
+              {planetDetailsSize}: {translatedSize}
+            </div>
+            <div className="moons-sect">
+              {planetDetailsMoons}: {translatedMoons}
+            </div>
+            <div className="days-sect">
+              {planetDetailsOrbital}: {translatedOrbPer}
+            </div>
           </AccordionDetails>
         </Accordion>
 
         {/* Geology and Composition */}
-        <Accordion sx={{ fontSize: "2.8vh" }} className="accordion" variant="outlined">
+        <Accordion
+          sx={{ fontSize: "2.8vh" }}
+          className="accordion"
+          variant="outlined"
+        >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             {geoTitle}
           </AccordionSummary>
@@ -212,7 +244,11 @@ export const PlanetDefault = ({planetDatas}) => {
         </Accordion>
 
         {/* Atmosphere and Climate */}
-        <Accordion sx={{ fontSize: "2.8vh" }} className="accordion" variant="outlined">
+        <Accordion
+          sx={{ fontSize: "2.8vh" }}
+          className="accordion"
+          variant="outlined"
+        >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             {atmTitle}
           </AccordionSummary>
@@ -220,7 +256,11 @@ export const PlanetDefault = ({planetDatas}) => {
         </Accordion>
 
         {/* Orbital Characteristics */}
-        <Accordion sx={{ fontSize: "2.8vh" }} className="accordion" variant="outlined">
+        <Accordion
+          sx={{ fontSize: "2.8vh" }}
+          className="accordion"
+          variant="outlined"
+        >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             {orbTitle}
           </AccordionSummary>
@@ -228,7 +268,11 @@ export const PlanetDefault = ({planetDatas}) => {
         </Accordion>
 
         {/* Exploration and Research */}
-        <Accordion sx={{ fontSize: "2.8vh" }} className="accordion" variant="outlined">
+        <Accordion
+          sx={{ fontSize: "2.8vh" }}
+          className="accordion"
+          variant="outlined"
+        >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             {expTitle}
           </AccordionSummary>
@@ -239,7 +283,11 @@ export const PlanetDefault = ({planetDatas}) => {
         <Select
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
-          sx={{ color: "#ffffff", backgroundColor: "#2c2c2c", marginTop: "10px" }}
+          sx={{
+            color: "#ffffff",
+            backgroundColor: "#2c2c2c",
+            marginTop: "10px",
+          }}
         >
           <MenuItem value="en">English</MenuItem>
           <MenuItem value="es">Spanish</MenuItem>
@@ -255,7 +303,11 @@ export const PlanetDefault = ({planetDatas}) => {
         <Select
           value={readingLevel}
           onChange={(e) => setReadingLevel(e.target.value)}
-          sx={{ color: "#ffffff", backgroundColor: "#2c2c2c", marginTop: "10px" }}
+          sx={{
+            color: "#ffffff",
+            backgroundColor: "#2c2c2c",
+            marginTop: "10px",
+          }}
         >
           <MenuItem value="h1050">Reading Level 1050</MenuItem>
           <MenuItem value="h1010">Reading Level 1010</MenuItem>
