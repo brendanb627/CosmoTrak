@@ -1,4 +1,4 @@
-z
+
 import React, { useState, useEffect } from "react";
 import { Html } from "@react-three/drei";
 import { Box } from "@mui/material";
