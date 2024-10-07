@@ -19,8 +19,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { PlanetInfoLabels } from "../Sub-Components/planet-info-labels";
 import AWS from "aws-sdk";
 
-const translate = new AWS.Translate();
 
+const translate = new AWS.Translate();
 
 const PlanetSphere = ({ planetTexture, radiant, radiantIntensity }) => {
   const { camera } = useThree();
@@ -81,6 +81,9 @@ export const PlanetDefault = ({planetDatas}) => {
   const [translatedOrbDef, setTranslatedOrbDef] = useState(planetData.orbDef);
   const [translatedExpDef, setTranslatedExpDef] = useState(planetData.expDef);
   const [translatedSummary, setTranslatedSummary] = useState(planetData.summary);
+  const [planetDetailsSize, setPlanetDetailsSize] = useState("Size");
+  const [planetDetailsMoons, setPlanetDetailsMoons] = useState("Moons");
+  const [planetDetailsOrbital, setPlanetDetailsOrbital] = useState("Orbital Period");
   const [translatedSize, setTranslatedSize] = useState(planetData.size);
   const [translatedMoons, setTranslatedMoons] = useState(planetData.moons);
   const [translatedOrbPer, setTranslatedOrbPer] = useState(planetData.orbPer);
@@ -106,6 +109,9 @@ export const PlanetDefault = ({planetDatas}) => {
         setTranslatedName(await translateText(planetData.name, language));
         setTranslatedType(await translateText(planetData.type, language));
         setTranslatedSummary(await translateText(planetData.summary, language));
+        setPlanetDetailsSize(await translateText("Size", language));
+        setPlanetDetailsMoons(await translateText("Moons", language));
+        setPlanetDetailsOrbital(await translateText("Orbital Period", language));
         setTranslatedSize(await translateText(planetData.size, language));
         setTranslatedMoons(await translateText(planetData.moons, language));
         setTranslatedOrbPer(await translateText(planetData.orbPer, language));
@@ -118,11 +124,15 @@ export const PlanetDefault = ({planetDatas}) => {
         setOrbTitle(await translateText("Orbital Characteristics", language));
         setExpTitle(await translateText("Exploration and Research", language));
         setPlanetDetailsTitle(await translateText("Planet Details", language));
+        
       } else {
         // Reset to English if no translation is needed
         setTranslatedName(planetData.name);
         setTranslatedType(planetData.type);
         setTranslatedSummary(planetData.summary);
+        setPlanetDetailsSize("Size")
+        setPlanetDetailsMoons("Moons")
+        setPlanetDetailsOrbital("Orbital Period")
         setTranslatedSize(planetData.size);
         setTranslatedMoons(planetData.moons);
         setTranslatedOrbPer(planetData.orbPer);
@@ -135,6 +145,7 @@ export const PlanetDefault = ({planetDatas}) => {
         setOrbTitle("Orbital Characteristics");
         setExpTitle("Exploration and Research");
         setPlanetDetailsTitle("Planet Details");
+        
       }
     
     }
@@ -186,9 +197,9 @@ export const PlanetDefault = ({planetDatas}) => {
           <AccordionDetails>
           <div className="sum-sect">{translatedSummary}</div>
           <Divider />
-          <div className="size-sect">Size: {translatedSize}</div>
-          <div className="moons-sect">Moons: {translatedMoons}</div>
-          <div className="days-sect">Orbital period: {translatedOrbPer}</div>
+          <div className="size-sect">{planetDetailsSize}: {translatedSize}</div>
+          <div className="moons-sect">{planetDetailsMoons}: {translatedMoons}</div>
+          <div className="days-sect">{planetDetailsOrbital}: {translatedOrbPer}</div>
           </AccordionDetails>
         </Accordion>
 
