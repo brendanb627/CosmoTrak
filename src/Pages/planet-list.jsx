@@ -20,6 +20,7 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { PlanetName } from "../Sub-Components/planet-name";
 
+
 export const PlanetList = () => {
   const [shiftPos, setShiftPos] = useState(0.2);
   const [move, setMove] = useState(0);
