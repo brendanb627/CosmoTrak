@@ -117,13 +117,20 @@ export const Asteroids = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const fetchAsteroidData = async () => {
+    const currentApiDate = new Date();
+    const year = currentApiDate.getFullYear();
+    const month = currentApiDate.getMonth() + 1; // months are 0-based
+    const day = currentApiDate.getDate();
+    const startDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    const futureDate = new Date(currentApiDate.getTime() + 6 * 24 * 60 * 60 * 1000);
+    const formattedDate = futureDate.toISOString().split('T')[0];
     try {
-      const startDate = "2023-09-01";
-      const endDate = "2023-09-07";
+      console.log("currentdate ",startDate)
+      console.log("futuredate ",formattedDate)
       const apiKey = "nVohxi2TGocD1nfEw7mOq561npMRvFSiX70Lqr0n";
 
       const response = await axios.get(
-        `https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=${apiKey}`
+        `https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${formattedDate}&api_key=${apiKey}`
       );
 
       const neos = response.data.near_earth_objects;
