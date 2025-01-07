@@ -22,12 +22,10 @@ const Earth = ({ scale }) => {
 
   return (
     <>
-           {" "}
       <mesh position={[-90, 0, 0]} scale={[scale, scale, scale]}>
-                <sphereGeometry args={[1, 32, 32]} />
-                <meshStandardMaterial map={texture} />     {" "}
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial map={texture} />
       </mesh>
-         {" "}
     </>
   );
 };
@@ -73,7 +71,6 @@ const AsteroidSystem = ({ currentAsteroid, distance }) => {
   if (earthScale < minScale) {
     return (
       <>
-                       {" "}
         <PlanetLabel
           position={earthCoords}
           scale={0.5}
@@ -82,7 +79,7 @@ const AsteroidSystem = ({ currentAsteroid, distance }) => {
           link={"/earth"}
           textMargin={"145px"}
         />
-                        {/* Adjust the scale dynamically */}       {" "}
+        {/* Adjust the scale dynamically */}
         {currentAsteroid && (
           <Asteroid
             position={asteroidPosition}
@@ -90,14 +87,14 @@ const AsteroidSystem = ({ currentAsteroid, distance }) => {
             name={currentAsteroid.name}
           />
         )}
-                <CameraController distance={distance} />     {" "}
+        <CameraController distance={distance} />
       </>
     );
   } else {
     return (
       <>
-                <Earth scale={earthScale} />{" "}
-        {/* Adjust the scale dynamically */}       {" "}
+        <Earth scale={earthScale} />
+        {/* Adjust the scale dynamically */}
         {currentAsteroid && (
           <Asteroid
             position={asteroidPosition}
@@ -105,7 +102,7 @@ const AsteroidSystem = ({ currentAsteroid, distance }) => {
             name={currentAsteroid.name}
           />
         )}
-                <CameraController distance={distance} />     {" "}
+        <CameraController distance={distance} />
       </>
     );
   }
@@ -121,12 +118,16 @@ export const Asteroids = () => {
     const year = currentApiDate.getFullYear();
     const month = currentApiDate.getMonth() + 1; // months are 0-based
     const day = currentApiDate.getDate();
-    const startDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-    const futureDate = new Date(currentApiDate.getTime() + 6 * 24 * 60 * 60 * 1000);
-    const formattedDate = futureDate.toISOString().split('T')[0];
+    const startDate = `${year}-${month.toString().padStart(2, "0")}-${day
+      .toString()
+      .padStart(2, "0")}`;
+    const futureDate = new Date(
+      currentApiDate.getTime() + 6 * 24 * 60 * 60 * 1000
+    );
+    const formattedDate = futureDate.toISOString().split("T")[0];
     try {
-      console.log("currentdate ",startDate)
-      console.log("futuredate ",formattedDate)
+      console.log("currentdate ", startDate);
+      console.log("futuredate ", formattedDate);
       const apiKey = "nVohxi2TGocD1nfEw7mOq561npMRvFSiX70Lqr0n";
 
       const response = await axios.get(
@@ -201,22 +202,19 @@ export const Asteroids = () => {
 
   return (
     <>
-            <PageLayout />     {" "}
+      <PageLayout />
       <div className="canvasScreen">
-               {" "}
         <Canvas color="black" width={800} height={600}>
-                    <ambientLight />         {" "}
+          <ambientLight />
           {/* Pass the current asteroid and calculated distance to the 3D scene */}
-                   {" "}
+
           <AsteroidSystem
             currentAsteroid={currentAsteroid}
             distance={distance}
           />
-                 {" "}
         </Canvas>
-             {" "}
       </div>
-            {/* Render the fixed AsteroidCard with info */}     {" "}
+      {/* Render the fixed AsteroidCard with info */}
       {currentAsteroid && (
         <AsteroidCard
           name={currentAsteroid.name}
@@ -241,7 +239,6 @@ export const Asteroids = () => {
           onNext={handleNextAsteroid}
         />
       )}
-         {" "}
     </>
   );
 };
